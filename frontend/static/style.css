@@ -1,0 +1,12 @@
+/* Custom styles for Video Nibbles */
+:root {
+    --primary-color: #8B5A2B;
+    --light-beige: #F5F5DC;
+    --medium-beige: #E8D8C1;
+    --dark-beige: #D2B48C;
+    --text-color: #3E2723;
+    --accent-color: #A0522D;
+    --error-color: #B71C1C;
+}
+
+/* All other styles are embedded in the index.html for simplicity */

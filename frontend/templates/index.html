@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800px, initial-scale=1.0">
+    <title>Yap Snatcher</title>
+    <link rel="icon" href="/static/yapper.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F5F1E9;
+            --accent-color: #E63946;
+            --text-color: #4A4A4A;
+            --highlight-color: #F6D55C;
+            --border-color: #E1DDD3;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+        
+        .form-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin: 5px 0 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            background-color: var(--bg-color);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.1);
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #d33440;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .error {
+            background-color: #fff5f5;
+            color: var(--accent-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 3px solid var(--accent-color);
+            font-size: 0.95rem;
+        }
+        
+        .summary-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+        
+        .video-info {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .video-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+        
+        .video-link {
+            font-size: 0.85rem;
+            color: #777;
+        }
+        
+        .video-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .video-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .summary-section {
+            margin-bottom: 25px;
+        }
+        
+        .summary-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .summary-header::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background-color: var(--accent-color);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        
+        .summary-content {
+            line-height: 1.7;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .key-points {
+            list-style-type: none;
+            padding-left: 5px;
+        }
+        
+        .key-points li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        
+        .key-points li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--highlight-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .copy-btn {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #eae5da;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+            padding: 15px 0;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            
+            .form-container, .summary-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="/static/yapper.jpg" alt="YapSnatcher Logo" class="logo">
+            <div>
+                <h1>YapSnatcher</h1>
+                <div class="tagline">snatching the yap, keeping the facts!</div>
+            </div>
+        </header>
+        
+        <div class="form-container">
+            <div class="form-title">Enter a YouTube Video URL</div>
+            
+            <form id="summaryForm" action="/summarize-form" method="post">
+                <input type="text" id="url" name="url" placeholder="https://www.youtube.com/watch?v=..." required 
+                       value="{{ url if url else '' }}">
+                <button type="submit">Generate Summary</button>
+            </form>
+            
+            <div id="loading" class="loading">
+                Generating summary, please wait...
+            </div>
+            
+            {% if error %}
+            <div class="error">
+                <p><strong>Error:</strong> {{ error }}</p>
+                <p>Try a video with available captions/subtitles.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if title %}
+        <div class="summary-container">
+            <div class="video-info">
+                <div class="video-title">{{ title }}</div>
+                <div class="video-link">
+                    <a href="{{ url }}" target="_blank">View on YouTube</a>
+                </div>
+            </div>
+            
+            <div class="summary-section">
+                <div class="summary-header">Summary</div>
+                <div class="summary-content">
+                    {{ summary | safe }}
+                </div>
+                <button type="button" onclick="copyToClipboard('summary-content')" class="copy-btn">
+                    Copy Summary
+                </button>
+            </div>
+            
+            {% if keyPoints %}
+            <div class="summary-section">
+                <div class="summary-header">Key Points</div>
+                <ul class="key-points">
+                    {% for point in keyPoints %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <footer>
+            &copy; {{ year if year else '2023' }} YapSnatcher - All rights reserved
+        </footer>
+    </div>
+
+    <script>
+        // Show loading indicator on form submit
+        document.getElementById('summaryForm').addEventListener('submit', function() {
+            document.getElementById('loading').style.display = 'block';
+        });
+        
+        // Function to copy text to clipboard
+        function copyToClipboard(elementClass) {
+            const text = document.querySelector('.' + elementClass).innerText;
+            
+            // Create temporary textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('Summary copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy text:', err);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
